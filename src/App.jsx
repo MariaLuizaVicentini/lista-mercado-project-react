@@ -1,18 +1,22 @@
+import { useState } from "react";
 import ItemLista from "./ItemLista"
 
 function App() {
-let listaMercado = [
-  "Banana", 
-  "Maça", 
-  "Carne",
-]
+
+  const [listaMercado, setListaMercado] = useState([])
 
   const adicionarElementoNaLista = () => {
     const novaLista = [...listaMercado]
-    novaLista.push('Novo item');
+    const valorInput = input.value;
 
-    listaMercado = novaLista;
+    novaLista.push(valorInput);
+
+    input.value = "";
+
+
     console.log(novaLista);
+
+    setListaMercado(novaLista);
   }
 
   return (
@@ -21,13 +25,21 @@ let listaMercado = [
       <input type="text" placeholder='Digite um item' />
       <button onClick={() => adicionarElementoNaLista()} >Adicionar</button>
 
-      <ul>
-        {listaMercado.map((itemLista, index) => (
-          <ItemLista key={index} itemLista={itemLista}/>
-        ))}
-      </ul>
 
-      
+      {listaMercado.length > 0 ? (
+        <ul>
+          {listaMercado.map((itemLista, index) => (
+            <ItemLista 
+              key={index} 
+              itemLista={itemLista} 
+              listaMercado={listaMercado} 
+              setListaMercado={setListaMercado} 
+            />
+          ))}
+        </ul> 
+      ) : (
+          <p>Voce nao tem nenhum item na sua lista</p>
+        )}
     </>
   )
 }
